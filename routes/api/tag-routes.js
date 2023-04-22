@@ -3,6 +3,7 @@ const { Tag, Product, ProductTag } = require("../../models");
 
 // The `/api/tags` endpoint
 
+//get all tags
 router.get("/", async (req, res) => {
   try {
     const tagData = await Tag.findAll({
@@ -20,9 +21,10 @@ router.get("/", async (req, res) => {
   }
 });
 
+//get one tag
 router.get("/:id", async (req, res) => {
   try {
-    const tagData = await Tag.finByPk(req.params.id, {
+    const tagData = await Tag.findByPk(req.params.id, {
       include: [
         {
           model: Product,
@@ -35,9 +37,8 @@ router.get("/:id", async (req, res) => {
     if (!tagData) {
       res.status(404).json({ message: "Product with that ID doesn't exist" });
       return;
-    } else {
-      res.status(200).json(tagData);
     }
+    res.status(200).json(tagData);
   } catch (error) {
     res.status(500).json(error);
   }

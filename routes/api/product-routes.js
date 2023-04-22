@@ -32,9 +32,8 @@ router.get("/:id", async (req, res) => {
     if (!productData) {
       res.status(404).json({ message: "Product with that ID doesn't exist" });
       return;
-    } else {
-      res.status(200).json(productData);
     }
+    res.status(200).json(productData);
   } catch (error) {
     res.error(500).json(error);
   }
@@ -126,9 +125,8 @@ router.delete("/:id", async (req, res) => {
     if (!productData) {
       res.status(404).json({ message: "Product with that ID doesn't exist" });
       return;
-    } else {
-      res.status(200).json(productData);
     }
+    res.status(200).json(productData);
   } catch (error) {
     res.status(500).json(error);
   }
