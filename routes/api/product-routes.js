@@ -1,22 +1,47 @@
-const router = require('express').Router();
-const { Product, Category, Tag, ProductTag } = require('../../models');
+const router = require("express").Router();
+const { Product, Category, Tag, ProductTag } = require("../../models");
 
 // The `/api/products` endpoint
 
 // get all products
-router.get('/', (req, res) => {
-  // find all products
-  // be sure to include its associated Category and Tag data
+router.get("/", async (req, res) => {
+  try {
+    const productData = await Product.findAll({
+      include: [
+        { model: Category },
+        { model: Tag, through: ProductTag, as: "relevant_tags" },
+      ],
+    });
+
+    res.status(200).json(productData);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
 
 // get one product
-router.get('/:id', (req, res) => {
-  // find a single product by its `id`
-  // be sure to include its associated Category and Tag data
+router.get("/:id", async (req, res) => {
+  try {
+    const productData = await Product.findByPk(req.params.id, {
+      include: [
+        { model: Category },
+        { model: Tag, through: ProductTag, as: "relevant_tags" },
+      ],
+    });
+
+    if (!productData) {
+      res.status(404).json({ message: "Product with that ID doesn't exist" });
+      return;
+    } else {
+      res.status(200).json(productData);
+    }
+  } catch (error) {
+    res.error(500).json(error);
+  }
 });
 
 // create new product
-router.post('/', (req, res) => {
+router.post("/", async (req, res) => {
   /* req.body should look like this...
     {
       product_name: "Basketball",
@@ -48,7 +73,7 @@ router.post('/', (req, res) => {
 });
 
 // update product
-router.put('/:id', (req, res) => {
+router.put("/:id", async (req, res) => {
   // update product data
   Product.update(req.body, {
     where: {
@@ -89,8 +114,24 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete("/:id", async (req, res) => {
   // delete one product by its `id` value
+  try {
+    const productData = await Product.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!productData) {
+      res.status(404).json({ message: "Product with that ID doesn't exist" });
+      return;
+    } else {
+      res.status(200).json(productData);
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
 
 module.exports = router;
