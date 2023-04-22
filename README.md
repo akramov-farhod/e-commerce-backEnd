@@ -12,11 +12,14 @@
   </details>
 
   ## Description 
+  
   Back end for an E-Commerce site
   
-  Acceptance Criteria:
+  ### Acceptance Criteria:
   
+  ```
   GIVEN a functional Express.js API
+  
   WHEN I add my database name, MySQL username, and MySQL password to an environment variable file
   THEN I am able to connect to a database using Sequelize
   WHEN I enter schema and seed commands
@@ -27,6 +30,8 @@
   THEN the data for each of these routes is displayed in a formatted JSON
   WHEN I test API POST, PUT, and DELETE routes in Insomnia Core
   THEN I am able to successfully create, update, and delete data in my database
+  
+  ```
   
   ## Table of Contents
   1. [Installation](#Installation)
@@ -66,7 +71,7 @@
 
   ## Usage
   
-  Once your server is Up and Running utilize Insomnia Core to Make Quick anc Easy changes to your database.
+  Once your server is Up and Running utilize Insomnia Core to Make Quick and Easy changes to your database.
 
   ## Contributing
   NA
